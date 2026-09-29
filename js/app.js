@@ -9,6 +9,7 @@
 
   // ---------- map and layers ----------
   const map = L.map('map', { zoomControl: true }).setView([-39.30, -71.98], 11);
+  const ruler = window.Lahar.initMeasure(map);
   const bases = {
     'Satélite (Esri)': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri' }),
     'Calles (OSM)': L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }),
@@ -84,6 +85,7 @@
   const cmd = (lat, lon) => PUBLIC ? '' : '<code>uv run lahar-check "' + lat.toFixed(6) + ', ' + lon.toFixed(6) + '"</code>';
 
   map.on('click', e => {
+    if (ruler.active) return;   // the ruler owns clicks while measuring
     const { lat, lng } = e.latlng, z = zoneOf(lat, lng);
     const inside = lat >= B[0][0] && lat <= B[1][0] && lng >= B[0][1] && lng <= B[1][1];
     const zt = z ? '<b>' + esc(z.zona) + '</b> — ' + esc(z.nivel) + '<br><small>' + esc(z.descripcion) + '</small>'

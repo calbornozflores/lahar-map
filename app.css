@@ -36,4 +36,22 @@ input[type=range] { width: 100%; }
   #dock .panel { position: static; width: auto; max-width: none; max-height: 45vh; }
   #aviso { font-size: 10px; }
 }
+
+
+/* ---- ruler ---- */
+#measure { top: 10px; left: 50%; transform: translateX(-50%); max-width: min(560px, calc(100vw - 140px)); }
+#mres { font-weight: 700; font-size: 14px; min-height: 18px; }
+#mres.bad { color: #b91c1c; }
+.mrow { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.mrow button { flex: 1 1 auto; min-height: 30px; }
+#measure button:disabled { opacity: .45; cursor: default; }
+#mbtn.active { background: #dbeafe; }
+.leaflet-container.measuring { cursor: crosshair; }
+.mvertex { background: #fff; border: 2px solid #2563eb; border-radius: 50%; box-shadow: 0 0 0 1px #fff; }
+.mlbl { display: inline-block; transform: translate(-50%, -50%); background: #fffe; border: 1px solid #2563eb55; border-radius: 3px; padding: 0 4px; font: 11px/16px system-ui, sans-serif; white-space: nowrap; pointer-events: none; }
+@media (max-width: 699px) {
+  #measure { left: 64px; right: 8px; transform: none; max-width: none; top: 8px; }
+  .mrow button { min-height: 40px; }
+  #mnote { display: none; }
+}
 [hidden] { display: none !important; }

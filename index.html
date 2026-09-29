@@ -47,6 +47,18 @@
   </div>
 </div>
 
+<div class="panel" id="measure" hidden role="region" aria-label="Medición">
+  <div id="mres" role="status"></div>
+  <div class="mrow">
+    <button id="mundo" type="button">Deshacer</button>
+    <button id="mclose" type="button">Cerrar polígono</button>
+    <button id="mcopy" type="button">Copiar</button>
+    <button id="mclear" type="button">Limpiar</button>
+    <button id="mexit" type="button">Salir</button>
+  </div>
+  <div id="mnote" class="hint">Clic añade puntos, arrastra para ajustar · Enter termina · Esc sale · ±0,3 % geodésico; el mapa base puede desplazarse unos metros.</div>
+</div>
+
 <div class="panel" id="aviso"><details id="avisod"><summary id="avisos"></summary><span id="avisotxt"></span></details></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -54,6 +66,8 @@
 <script src="peligro.js"></script>
 <script src="js/parse.js"></script>
 <script src="js/zones.js"></script>
+<script src="js/measure.js"></script>
+<script src="js/measure-ui.js"></script>
 <script src="js/store.js"></script>
 <script src="js/app.js"></script>
 </body>
