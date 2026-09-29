@@ -11,11 +11,15 @@
   const map = L.map('map', { zoomControl: true }).setView([-39.30, -71.98], 11);
   const ruler = window.Lahar.initMeasure(map);
   const bases = {
-    'Satélite (Esri)': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri' }),
+    // maxZoom = deepest level that really has tiles here (probed): Esri serves a "Map data not yet available"
+    // placeholder from z19 in this region, so the map is stopped at 18 instead of showing it. OSM: 19, OpenTopoMap: 17.
+    'Satélite (Esri)': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 18, attribution: 'Esri' }),
     'Calles (OSM)': L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }),
     'Topográfico (OpenTopoMap)': L.tileLayer('https://tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '© OpenTopoMap' }),
   };
   bases['Satélite (Esri)'].addTo(map);
+  // the map's max zoom follows the active basemap; pull the view back if the new one goes less deep
+  map.on('baselayerchange', () => { if (map.getZoom() > map.getMaxZoom()) map.setZoom(map.getMaxZoom()); });
   const haz = L.imageOverlay('hazard_overlay.png', B, { opacity: .6 }).addTo(map);
   const orig = PUBLIC ? null : L.imageOverlay('map_overlay.webp', B, { opacity: 0 }).addTo(map);
   const vec = L.geoJSON(HAZ, { style: () => ({ color: '#000', weight: 1, fillOpacity: 0 }) });
