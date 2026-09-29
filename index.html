@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa de peligros Villarrica</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="map"></div>
+
+<div id="dock">
+  <div class="panel" id="ctl">
+    <button class="fold" type="button" aria-expanded="true">Capas</button>
+    <div class="body">
+      <label>Peligro (clases): <span id="v1"></span><input id="o1" type="range" min="0" max="100" value="60"></label>
+      <label id="lblorig">Mapa impreso original: <span id="v2"></span><input id="o2" type="range" min="0" max="100" value="0"></label>
+      <label><input type="checkbox" id="vec"> Polígonos vectorizados (contorno)</label>
+
+      <form id="pform" novalidate style="margin-top:8px">
+        <b id="ftitle">Mis puntos</b>
+        <textarea id="q" class="f" rows="2" placeholder="lat, lon  o link largo de Google Maps"></textarea>
+        <input id="nm" class="f" placeholder="Nombre">
+        <input id="lg" class="f" placeholder="Leyenda / nota">
+        <div style="margin-top:3px">Color <input type="color" id="cl" value="#2563eb" style="vertical-align:middle"> <span id="sw"></span></div>
+        <div class="row"><button id="save" type="submit">Guardar punto</button><button id="cancel" type="button" hidden>Cancelar</button></div>
+        <button id="go" type="button" class="f">Solo ubicar (sin guardar)</button>
+        <div class="row"><button id="exp" type="button">Exportar</button><button id="imp" type="button">Importar</button></div>
+        <input type="file" id="impf" accept=".json" hidden>
+        <div id="qmsg" role="status"></div>
+      </form>
+      <div class="hint">Clic en el mapa: zona oficial, coordenadas y enlace a Google Maps; arrastra un punto guardado para moverlo.</div>
+    </div>
+  </div>
+
+  <div class="panel" id="leg">
+    <button class="fold" type="button" aria-expanded="true">Zonas (SERNAGEOMIN 2000)</button>
+    <div class="body">
+      <div id="zlegend"></div>
+      <hr style="margin:6px 0">
+      <b>Mis puntos</b>
+      <div id="mylist"></div>
+      <div id="credits"></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="aviso"><details id="avisod"><summary id="avisos"></summary><span id="avisotxt"></span></details></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="config.js"></script>
+<script src="peligro.js"></script>
+<script src="js/parse.js"></script>
+<script src="js/zones.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

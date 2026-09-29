@@ -1,0 +1,39 @@
+html, body, #map { height: 100%; margin: 0; }
+@supports (height: 100dvh) { html, body, #map { height: 100dvh; } }
+body { font: 12px/1.35 system-ui, sans-serif; }
+.panel { position: absolute; z-index: 1000; background: #fffe; border-radius: 6px; padding: 8px 10px; box-shadow: 0 1px 6px #0004; }
+#ctl { top: 10px; right: 10px; width: 240px; max-height: calc(100vh - 80px); overflow: auto; }
+#leg { bottom: 56px; left: 10px; max-width: 300px; max-height: 42vh; overflow: auto; }
+#aviso { bottom: 0; left: 0; right: 0; border-radius: 0; font-size: 11px; text-align: center; padding: 6px 10px; }
+#aviso summary { cursor: pointer; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }
+.fold { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 0; font: inherit; font-weight: 700; }
+.fold::after { content: " ▾"; color: #666; }
+.panel.closed .fold::after { content: " ▸"; }
+.panel.closed .body { display: none; }
+#ctl label { display: block; margin-top: 6px; }
+.sw { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -2px; border: 1px solid #0004; }
+input[type=range] { width: 100%; }
+.f { width: 100%; box-sizing: border-box; margin-top: 3px; }
+#q { font: 11px monospace; }
+.row { display: flex; gap: 4px; margin-top: 4px; }
+.row > button { flex: 1; }
+#qmsg { color: #b91c1c; margin-top: 3px; }
+.hint { margin-top: 6px; color: #555; }
+.ico { border: 0; background: none; padding: 0 2px; font-size: 13px; }
+.pt { margin: 3px 0; }
+.pt small { color: #555; }
+#dock { display: contents; }
+#credits { margin-top: 8px; padding-top: 6px; border-top: 1px solid #0002; font-size: 10.5px; color: #444; }
+#credits p { margin: 3px 0; }
+#aviso.strong { background: #fff8e1f2; font-weight: 600; }
+
+@media (min-width: 700px) { #aviso summary { display: none; } }
+@media (max-width: 699px) {
+  #aviso summary { display: list-item; }
+  #dock { position: absolute; left: 8px; right: 8px; bottom: 38px; z-index: 1000; display: flex; flex-direction: column; gap: 6px; }
+  #dock .panel { position: static; width: auto; max-width: none; max-height: 45vh; }
+  #aviso { font-size: 10px; }
+}
+[hidden] { display: none !important; }
