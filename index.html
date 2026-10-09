@@ -15,9 +15,11 @@
   <div class="panel" id="ctl">
     <button class="fold" type="button" aria-expanded="true">Capas</button>
     <div class="body">
-      <label>Peligro (clases): <span id="v1"></span><input id="o1" type="range" min="0" max="100" value="60"></label>
-      <label id="lblorig">Mapa impreso original: <span id="v2"></span><input id="o2" type="range" min="0" max="100" value="0"></label>
+      <div class="g43row"><label><input type="checkbox" id="hzc" checked> Moreno 2000 <small>(1:75.000, volcán completo)</small></label> <span class="v" id="v1"></span>
+        <input id="o1" type="range" min="0" max="100" value="60" aria-label="Transparencia: Moreno 2000"></div>
       <label><input type="checkbox" id="vec"> Polígonos vectorizados (contorno)</label>
+
+      <div id="ga43" class="grp"><b>GA43 2025 · 1:25.000</b> <small>flanco norte</small><div id="ga43rows"></div></div>
 
       <form id="pform" novalidate style="margin-top:8px">
         <b id="ftitle">Mis puntos</b>
@@ -39,6 +41,7 @@
     <button class="fold" type="button" aria-expanded="true">Zonas (SERNAGEOMIN 2000)</button>
     <div class="body">
       <div id="zlegend"></div>
+      <div id="ga43legend" hidden></div>
       <hr style="margin:6px 0">
       <b>Mis puntos</b>
       <div id="mylist"></div>
@@ -66,6 +69,7 @@
 <script src="peligro.js"></script>
 <script src="js/parse.js"></script>
 <script src="js/zones.js"></script>
+<script src="js/ga43-layers.js"></script>
 <script src="js/measure.js"></script>
 <script src="js/measure-ui.js"></script>
 <script src="js/store.js"></script>

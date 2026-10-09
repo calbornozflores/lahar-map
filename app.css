@@ -21,6 +21,14 @@ input[type=range] { width: 100%; }
 .row > button { flex: 1; }
 #qmsg { color: #b91c1c; margin-top: 3px; }
 .hint { margin-top: 6px; color: #555; }
+.grp { margin-top: 8px; padding-top: 6px; border-top: 1px solid #0002; }
+.g43row { margin-top: 4px; }
+.g43row label { display: inline; margin: 0; }
+.g43row .v { float: right; color: #555; }
+.g43row input[type=range] { display: block; margin: 2px 0 0; }
+.g43row input[type=range]:disabled { opacity: .4; }
+#ga43legend { margin-top: 6px; padding-top: 6px; border-top: 1px solid #0002; font-size: 11px; }
+#ga43legend small { color: #555; }
 .ico { border: 0; background: none; padding: 0 2px; font-size: 13px; }
 .pt { margin: 3px 0; }
 .pt small { color: #555; }

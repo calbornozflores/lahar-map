@@ -1,9 +1,9 @@
 /* Map + UI wiring. Data globals: CONFIG (config.js), HAZ and CAUCES (peligro.js). Logic lives in parse/zones/store. */
 (function () {
-  const { parsePoint, zoneAt, createStore } = window.Lahar;
+  const { parsePoint, zoneAt, createStore, initGa43 } = window.Lahar;
   const $ = id => document.getElementById(id);
   const B = CONFIG.bounds;
-  const PUBLIC = !!CONFIG.public;   // public build: no printed-map layer, no seed point, no CLI hints
+  const PUBLIC = !!CONFIG.public;   // public build: no seed point, no CLI hints
   const narrow = window.innerWidth < 700;
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -21,7 +21,6 @@
   // the map's max zoom follows the active basemap; pull the view back if the new one goes less deep
   map.on('baselayerchange', () => { if (map.getZoom() > map.getMaxZoom()) map.setZoom(map.getMaxZoom()); });
   const haz = L.imageOverlay('hazard_overlay.png', B, { opacity: .6 }).addTo(map);
-  const orig = PUBLIC ? null : L.imageOverlay('map_overlay.webp', B, { opacity: 0 }).addTo(map);
   const vec = L.geoJSON(HAZ, { style: () => ({ color: '#000', weight: 1, fillOpacity: 0 }) });
   const cauces = L.geoJSON(CAUCES, {
     style: { color: '#1d4ed8', weight: 2 },
@@ -35,9 +34,7 @@
       .addTo(batch);
   });
   const mineLayer = L.layerGroup().addTo(map), tmp = L.layerGroup().addTo(map);
-  const overlays = { 'Peligro (clases)': haz };
-  if (orig) overlays['Mapa impreso'] = orig;
-  Object.assign(overlays, { 'Cauces OSM': cauces, 'Contorno vectorial': vec });
+  const overlays = { 'Cauces OSM': cauces, 'Contorno vectorial': vec };
   if (!PUBLIC) overlays['Puntos batch'] = batch;
   overlays['Mis puntos'] = mineLayer;
   L.control.layers(bases, overlays, { collapsed: narrow, position: 'topleft' }).addTo(map);
@@ -48,7 +45,9 @@
     e.oninput = f; f();
   };
   bindOpacity('o1', haz, 'v1');
-  if (orig) bindOpacity('o2', orig, 'v2'); else $('lblorig').hidden = true;
+  $('hzc').onchange = e => { e.target.checked ? haz.addTo(map) : map.removeLayer(haz); $('o1').disabled = !e.target.checked; };   // Moreno 2000 row
+  const ga43 = initGa43(map, CONFIG, { zoneAt });
+  window.Lahar.ga43 = ga43;   // read by tests/browser_check.py
   $('vec').onchange = e => e.target.checked ? vec.addTo(map) : map.removeLayer(vec);
 
   // ---------- static content from config ----------
@@ -95,7 +94,7 @@
     const zt = z ? '<b>' + esc(z.zona) + '</b> — ' + esc(z.nivel) + '<br><small>' + esc(z.descripcion) + '</small>'
       : (inside ? 'Fuera de zonas de peligro coloreadas (relieve/lago/sin clasificar)' : 'Fuera del mapa SERNAGEOMIN');
     L.popup({ maxWidth: narrow ? 240 : 300 }).setLatLng(e.latlng).setContent(
-      lat.toFixed(6) + ', ' + lng.toFixed(6) + '<br>' + zt + '<br>' + gm(lat, lng) + (PUBLIC ? '' : '<br>' + cmd(lat, lng)) +
+      lat.toFixed(6) + ', ' + lng.toFixed(6) + '<br>' + zt + ga43.infoHtml(lat, lng) + '<br>' + gm(lat, lng) + (PUBLIC ? '' : '<br>' + cmd(lat, lng)) +
       '<br><a href="#" data-act="use" data-lat="' + lat + '" data-lon="' + lng + '">Usar estas coordenadas en el formulario</a>').openOn(map);
   });
 
@@ -210,10 +209,9 @@
 
   render();
 
-  // #lat,lon,zoom[,mapOpacity%] deep-links a view
+  // #lat,lon,zoom deep-links a view
   const h = location.hash.slice(1).split(',').map(Number);
   if (h.length >= 3 && h.every(v => !isNaN(v))) {
     map.setView([h[0], h[1]], h[2]);
-    if (orig && h[3] !== undefined) { $('o2').value = h[3]; $('o2').oninput(); }
   } else map.fitBounds(B);
 })();
