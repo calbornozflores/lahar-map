@@ -24,7 +24,7 @@
   const vec = L.geoJSON(HAZ, { style: () => ({ color: '#000', weight: 1, fillOpacity: 0 }) });
   const cauces = L.geoJSON(CAUCES, {
     style: { color: '#1d4ed8', weight: 2 },
-    onEachFeature: (f, l) => l.bindTooltip(f.properties.cauce + ' (OSM, aprox.)'),
+    onEachFeature: (f, l) => l.bindTooltip(f.properties.cauce + (f.properties.fuente === 'manual' ? ' (trazado a mano, aprox.)' : ' (OSM, aprox.)')),
   }).addTo(map);
   const batch = L.layerGroup().addTo(map);
   const CAT = { ALTO: '#dc2626', MODERADO: '#f59e0b', BAJO: '#16a34a', SIN_DATO: '#6b7280' };

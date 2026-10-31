@@ -14,5 +14,5 @@ Municipalidad de Pucón y consultar a SERNAGEOMIN/ONEMI.
 - Capas GA43 (lava, corrientes piroclásticas, lahares, balísticos y peligro máximo): derivadas de las figs. 11 a 14 de *Peligros del
   sector norte del Volcán Villarrica*, Vera, Flores y Bono (2025), SERNAGEOMIN, Serie Geología Ambiental 43 (1:25.000). Vectorización
   aproximada por color desde figuras raster; solo el flanco norte.
-- Cauces: © colaboradores de OpenStreetMap (ODbL), digitalización aproximada.
+- Cauces: © colaboradores de OpenStreetMap (ODbL), digitalización aproximada; el Estero El Candelaria está trazado a mano.
 - Mapas base: Esri World Imagery, © OpenStreetMap, © OpenTopoMap.
